@@ -1,32 +1,33 @@
-import RPi.GPIO as GPIO
-from flask import Flask, render_template, request
+import RPi.GPIO as GPIOfrom flask import Flask, render_template, request
 app = Flask(__name__)
 
-GPIO.setmode(GPIO.BCM)
 
 # Create a dictionary called pins to store the pin number, name, and pin state:
-pins = {
-   23 : {'name' : 'GPIO 23', 'state' : GPIO.LOW},
-   24 : {'name' : 'GPIO 24', 'state' : GPIO.LOW}
-   }
+config = {'power' : 'on', 'fan' : 3, 'temp' : 17}
+   
 
-# Set each pin as an output and make it low:
-for pin in pins:
-   GPIO.setup(pin, GPIO.OUT)
-   GPIO.output(pin, GPIO.LOW)
-
+def read_by_tokens(fileobj):
+   for line in fileobj:
+      for token in line.split():
+         yield token
+         
 @app.route("/")
-def main():
+def main(): 
+   with open('config.config') as f:
+      for token in read_by_tokens(f):
+         print(token)
+         
    # For each pin, read the pin state and store it in the pins dictionary:
-   for pin in pins:
-      pins[pin]['state'] = GPIO.input(pin)
+  
    # Put the pin dictionary into the template data dictionary:
    templateData = {
-      'pins' : pins
+      'config' : config
       }
    # Pass the template data into the template main.html and return it to the user
    return render_template('main.html', **templateData)
 
+   
+   
 # The function below is executed when someone requests a URL with the pin number and action in it:
 @app.route("/<changePin>/<action>")
 def action(changePin, action):
