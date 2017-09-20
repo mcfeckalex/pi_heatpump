@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Alex's app</title>
+  </head>
+
+ <form  action="/" method="post">
+<select name="temp", input type="submit">
+{% for row in choices %}
+	<option value="{{ row[0] }}"{% if row[0] == state.choice %} selected{% endif %}>{{ row[1] }}</option>
+{% endfor %}
+</select>
+</form>
+  </body>
+</html>
