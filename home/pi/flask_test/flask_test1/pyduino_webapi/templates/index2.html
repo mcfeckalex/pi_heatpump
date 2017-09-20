@@ -1,15 +1,92 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Alex's app</title>
-  </head>
+<!--
+This is an example app that demonstrates how to control an Nordic nRF518822-EK evaluation kit
+using BLE (Bluetooth Low Energy).
+-->
+<head>
 
- <form  action="/" method="post">
-<select name="temp", input type="submit">
-{% for row in choices %}
-	<option value="{{ row[0] }}"{% if row[0] == state.choice %} selected{% endif %}>{{ row[1] }}</option>
-{% endfor %}
-</select>
-</form>
-  </body>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, height=device-height, user-scalable=no
+		initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0 target-densitydpi=high-dpi" />
+
+	<title>RCAT Production Test App</title>
+
+	<style>
+		@import 'ui/css/evothings-app.css';
+	</style>
+ 
+	
+	
+	<script src="libs/jquery/jquery.js"></script>
+	
+</head>
+
+<body ontouchstart=""><!-- ontouchstart="" enables low-delay CSS transitions. -->
+
+	<header>
+		<!--<button class="back" onclick="history.back()">
+			<img src="ui/images/arrow-left.svg" />
+		</button>-->
+		</button>
+
+		<img class="logotype" src="logo.png" alt="Evothings" />
+
+	</header>
+	
+	<h2>Heatpump control</h2>
+   <p id="connected"></p>
+	</div>
+	
+	<p id="info">Initializing...</p> 
+	<p id="log"></p>
+	
+	<form  action="/" method="post">
+  <p><input type="submit" name="submit" value="temp up"></p>
+  <p>{{temp}}C</p>
+  <p><input type="submit" name="submit" value="temp down"</p>
+
+    </form>
+	
+		
+	<form  action="/" method="post">
+	<p><button type="submit" name="submit" value="Temp Up" id="button-tempup" class="blue wide" onclick="app.tempUp()">Temp Up</button></p> 
+	<p id="temp"></p>
+	<p><button type="submit" name="submit" value="Temp Down" id="button-tempdown" class="blue wide" onclick="app.tempDown()">Temp Down </button></p> 
+	</form>
+
+	<script>	
+	console.log('Hello World!');
+
+	// Application object.
+	var app = {};
+
+	
+	//temp var
+	var temp = 17;
+	
+	
+	
+	app.tempUp=function tempUp() 
+	{
+      temp = temp+1;
+    document.getElementById("temp").innerHTML = temp;
+	}
+   
+   app.tempDown=function tempDown() 
+	{
+      temp = temp-1;
+    document.getElementById("temp").innerHTML = temp;
+	}
+	
+	app.onLoad=function onLoad()
+   {
+      document.getElementById("temp").innerHTML = temp;
+   }
+	
+   window.addEventListener("load", app.onLoad, false);
+	</script>
+
+</body>
+
 </html>
